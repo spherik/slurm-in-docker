@@ -5,8 +5,12 @@ MAINTAINER Michael J. Stealey <stealey@renci.org>
 RUN yum -y install \
   gcc-c++ \
   gcc-gfortran \
+  python36-setuptools \
+  && easy_install-3.6 pip \
   && yum -y localinstall \
   /packages/openmpi-*.rpm
+
+RUN pip3 install mne nilearn matplotlib scipy
 
 # install Lmod 7.7
 RUN yum -y install \
