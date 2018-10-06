@@ -17,6 +17,7 @@ RUN yum -y install \
   wget \
   bzip2 \
   expectk \
+  nano \
   make \
   && wget https://sourceforge.net/projects/lmod/files/Lmod-7.7.tar.bz2 \
   && tar -xjvf Lmod-7.7.tar.bz2
