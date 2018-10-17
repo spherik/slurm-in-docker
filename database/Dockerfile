@@ -1,4 +1,4 @@
-FROM scidas/slurm.base:17.11.5
+FROM specsbcn/ubuntu_slurm.base:0.2
 MAINTAINER Michael J. Stealey <stealey@renci.org>
 
 ENV DBD_ADDR=database \
@@ -10,9 +10,7 @@ ENV DBD_ADDR=database \
   STORAGE_USER=slurm
 
 # clean up
-RUN rm -f /packages/slurm-*.rpm /packages/openmpi-*.rpm \
-  && yum clean all \
-  && rm -rf /var/cache/yum
+RUN apt clean
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 

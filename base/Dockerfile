@@ -1,4 +1,4 @@
-FROM krallin/centos-tini:7
+FROM krallin/ubuntu-tini:xenial
 MAINTAINER Michael J. Stealey <stealey@renci.org>
 
 ENV SLURM_VERSION=17.11.5 \
@@ -14,26 +14,38 @@ RUN groupadd -g $MUNGE_UID munge \
   && useradd  -m -c "Workflow user" -d /home/worker -u $WORKER_UID -g worker  -s /bin/bash worker
 
 # install packages for general functionality
-RUN yum -y install \
-  epel-release \
-  && yum -y install \
-  sudo \
-  wget \
-  which \
-  tree \
-  mariadb-server \
-  mariadb-devel \
-  munge \
-  munge-libs \
-  munge-devel \
-  openssh-server \
-  openssh-clients
+#RUN yum -y install \
+#  epel-release \
+#  && yum -y install \
+#  sudo \
+#  wget \
+#  which \
+#  tree \
+#  mariadb-server \
+#  mariadb-devel \
+#  munge \
+#  munge-libs \
+#  munge-devel \
+#  openssh-server \
+#  openssh-clients
+
+RUN apt update \
+    && apt upgrade -y \
+    && apt install -y \
+    apt-utils \
+    mariadb-server mariadb-client \
+    munge \
+    openssh-server \
+    slurm
+
+
 
 # install slurm 17.11.5
-COPY rpms /packages
-# /usr/bin/mpiexec from slurm-torque conflicts with openmpi install
-WORKDIR /packages
-RUN yum -y localinstall $(ls | grep -v -e 'torque' -e 'openmpi')
+#COPY rpms /packages
+## /usr/bin/mpiexec from slurm-torque conflicts with openmpi install
+#WORKDIR /packages
+#RUN yum -y localinstall $(ls | grep -v -e 'torque' -e 'openmpi')
+
 WORKDIR /
 
 VOLUME ["/home", "/.secret"]
