@@ -2,6 +2,7 @@ FROM specsbcn/ubuntu_slurm.base:0.2
 MAINTAINER Michael J. Stealey <stealey@renci.org>
 
 # install openmpi 3.0.1
+RUN apt update && apt -y upgrade
 RUN apt -y install \
   build-essential \
   openmpi-bin libopenmpi-dev
